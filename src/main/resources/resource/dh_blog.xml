@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" 
+	"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<context id="guandan_back" defaultModelType="flat">
+		<property name="javaFileEncoding" value="UTF-8"/>
+		<!-- 字段分隔符 -->
+		<property name="beginningDelimiter" value="`"/>
+		<property name="endingDelimiter" value="`"/>
+		
+		<!-- 注释生成器配置 -->
+		<commentGenerator type="com.dh.util.MyCommentGenerator">
+			<property name="suppressAllComments" value="true"/>
+			<property name="suppressDate" value="true"/>
+		</commentGenerator>
+	
+		<!-- 数据库连接配置 -->
+		<jdbcConnection connectionURL="jdbc:mysql://127.0.0.1:3306/guandan_back?characterEncoding=utf8&amp;useUnicode=true" 
+				driverClass="com.mysql.jdbc.Driver" password="123456" userId="dahai" />
+		
+		<!-- 实体类生成器配置   必须-->
+		<javaModelGenerator targetPackage="com.hk.entity.log" targetProject="app/src/main/java" />
+		
+		<!-- Mapper映射文件生成器配置  取决于接口生成器-->
+		<sqlMapGenerator targetPackage="mybatis.mapper.log" targetProject="app/src/main/resources" />
+		
+		<!-- Mapper接口生成器配置  可选-->
+		<javaClientGenerator targetPackage="com.hk.mapper.log" targetProject="app/src/main/java" type="XMLMAPPER" />
+		
+		<!-- 数据库表配置 -->
+		<table tableName="pms_opt_log" domainObjectName="OptLog" mapperName="OptLogMapper" delimitAllColumns="true">
+		</table>
+		
+		<!-- <table schema="dh_blog" tableName="blog" domainObjectName="Blog" mapperName="BlogMapper" delimitAllColumns="true">
+		</table>
+		
+		<table schema="dh_blog" tableName="blog_content" domainObjectName="BlogContent" mapperName="BlogContentMapper" delimitAllColumns="true">
+		</table>
+		
+		<table schema="dh_blog" tableName="blog_type" domainObjectName="BlogType" mapperName="BlogTypeMapper" delimitAllColumns="true">
+		</table> -->
+		
+	</context>
+</generatorConfiguration>
+
+

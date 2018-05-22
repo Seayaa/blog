@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+		
+		<!-- 事务管理器 -->
+		<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+			<property name="dataSource" ref="dataSource"></property>
+		</bean>
+		
+		<!-- 事务传播特性 -->
+		<tx:advice id="txAdvice" transaction-manager="transactionManager">
+			<tx:attributes>
+				<tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception"/>
+				<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+				<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/>
+				<tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception"/>
+				<tx:method name="modify*" propagation="REQUIRED" rollback-for="Exception"/>
+				<tx:method name="remove*" propagation="REQUIRED" rollback-for="Exception"/>
+				<tx:method name="edit*" propagation="REQUIRED" rollback-for="Exception"/>
+				<!-- 默认只读 -->
+				<tx:method name="*" read-only="true" />
+			</tx:attributes>
+		</tx:advice>
+		
+		<!-- 事务AOP -->
+		<aop:config>
+			<aop:pointcut expression="execution(* com.dh..*Service.*(..))" id="txPoint"/>
+			<aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>
+		</aop:config>
+		
+		<!-- 事务处理注解支持 -->
+		<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+		
+		<!-- 编程式事务处理 -->
+		<bean id="transactionTemplate"
+			class="org.springframework.transaction.support.TransactionTemplate">
+			<property name="transactionManager" ref="transactionManager" />
+		</bean>
+		
+</beans>
